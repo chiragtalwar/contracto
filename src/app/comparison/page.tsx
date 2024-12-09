@@ -17,8 +17,10 @@ import {
 import { Download, MessageSquare, Check, X } from 'lucide-react'
 import { ContractComparisonService } from '@/lib/services/contractComparisonService'
 import { Contract, ContractAnalysis } from '@/types/contract'
+import { useRouter } from 'next/navigation'
 
 export default function ComparisonPage() {
+  const router = useRouter()
   const [contracts, setContracts] = useState<Contract[]>([])
   const [loading, setLoading] = useState(true)
   const [view, setView] = useState('table')
@@ -49,6 +51,10 @@ export default function ComparisonPage() {
 
     loadContracts()
   }, [])
+
+  const handleChatClick = () => {
+    router.push('/chatbot')
+  }
 
   if (loading) {
     return <div className="min-h-screen bg-slate-900 flex items-center justify-center">
@@ -168,12 +174,18 @@ export default function ComparisonPage() {
         )}
 
         <div className="flex justify-between mt-6">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+          <Button 
+            onClick={() => {/* handle download */}}
+            className="bg-blue-500 hover:bg-blue-600 text-white"
+          >
             Download Comparison Report
-          </button>
-          <button className="bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 transition-colors">
+          </Button>
+          <Button 
+            onClick={handleChatClick}
+            className="bg-purple-500 hover:bg-purple-600 text-white"
+          >
             Chat with Contract Analyzer Pro
-          </button>
+          </Button>
         </div>
       </div>
     </div>
